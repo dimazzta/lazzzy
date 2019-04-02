@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="lib/prism.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Mrs+Sheppards|Raleway:300,400,500,600,700" rel="stylesheet">
+
+    <title>Lazzzy.js</title>
+</head>
+<body>
+    <header>
+        <div class="tight-container">
+            <div class="logo">
+                <h1 class="logo-text">Lazzzy.js</h1>
+            </div>
+            <hr>
+            <nav>
+                <ul>
+                    <li class="active">
+                        <a href="index.html">Start</a>
+                    </li>
+                    <li>
+                        <a href="demo1.html">Demo 1</a>
+                    </li>
+                    <li>
+                        <a href="demo2.html">Demo 2</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <div class="tight-container">
+            <article>
+                <p>Lazzzy is a lightweight library for implementing lazy loading images really fast and easy. Follow up the instructions to get started </p>
+                
+                <h2>Inlcude files</h2>
+                <hr>
+                <p>The only file you need is <a href="lazzzy.js" download>lazzzy.js.</a> </p>
+                <pre><code class="language-html">
+&lt;script src="./lazzzy.js">&lt;/script>
+                </code></pre>
+                
+                <h2 class="mt-4">Prepare markup</h2>
+                <hr>
+
+                <p>For images you are going to make lazy add a class (e.g. "lazy") and a <strong><i>data-src</i></strong> attribute and specify path to the full-size image. 
+                You can optionally add a <strong><i>src</i></strong> attribute and specify path to the low-resolution image to make cool transition effect. 
+                Note that you are in charge of making low-res image to be the same width and height as main image. 
+                This can be done by hardcoding actual width and height attributes or using wrapper (check <a href="demo1.html" target="_blank">example</a>.)
+                If you won`t use low-res image you can just add a wrapper with some background color as a stab.
+                </p>
+                <pre><code class="language-html">
+&lt;div class="img-wrapper">
+    &lt;img src="path/to/low-res/image.jpg" class="lazy" data-src="path/to/full/image.jpg" alt="">
+&lt;/div>
+                </code></pre>
+
+                <h2 class="mt-4">Initialize lazzzy</h2>
+                <hr>
+                <pre><code class="language-js">
+lazzzy.init({
+    selector: '.lazy',
+    allowLoadingOutsideViewport: false,
+    classAfterLoading: 'loaded',
+    dataLoadedForNotComputable: -1,
+    classBeforeLoading: ''
+});
+                </code></pre>
+                <table class="table table-bordered mt-5 ">
+                    <thead>
+                        <tr>
+                            <td>Name</td>
+                            <td>Type</td>
+                            <td>Description</td>
+                        </tr>
+                    </thead>  
+                    <tbody>
+                        <tr>
+                            <td><strong>selector</strong>  </td>
+                            <td>Optional</td>
+                            <td>What elements are going to be lazy. If not specified, selects all images</td>
+                        </tr>
+                        <tr>
+                            <td><strong>allowLoadingOutsideViewport</strong></td>
+                            <td>Optional</td>
+                            <td>If false, only those images that are in user viewport will be loaded, the rest won`t until user scrolls the page.
+                                False by default
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>classAfterLoading</strong></td>
+                            <td>Optional</td>
+                            <td>A class that will be added to the image when it completely loaded. No class will be added by default</td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>dataLoadedForNotComputable</strong></td>
+                            <td>Optional</td>
+                            <td>Lazzzy adds a "data-loaded" attribute while image loading is in progress. 
+                                This attribute contains current progress of loading (in percents) so you can display it somewhere using javascript.
+                                If specified, then in case when lazzzy can not compute this value, the specified value will be used (could be -1). 
+                                If not specified, the "data-loaded" attribute won`t be added at all in case of non-computable value </td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>classBeforeLoading</strong></td>
+                            <td>Optional</td>
+                            <td>A class that will be added to the image before loading and will disappear when loading ends. No class will be added by default</td>
+                        </tr>
+                    </tbody>
+                    
+                </table>
+            </article>
+        </div>
+    </main>
+    <script src="./lib/prism.js"></script>
+</body>
+</html>

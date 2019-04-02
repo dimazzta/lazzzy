@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="lib/prism.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Mrs+Sheppards|Raleway:300,400,500,600,700" rel="stylesheet">
+
+    <title>Lazzzy.js - Demo 2</title>
+</head>
+
+<body>
+    <header>
+        <div class="tight-container">
+            <div class="logo">
+                <h1 class="logo-text">Lazzzy.js</h1>
+            </div>
+            <hr>
+            <nav>
+                <ul>
+                    <li >
+                        <a href="index.html">Start</a>
+                    </li>
+                    <li>
+                        <a href="demo1.html">Demo 1</a>
+                    </li>
+                    <li class="active">
+                        <a href="demo2.html">Demo 2</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <div class="tight-container">
+            <article>
+                    <h3>HTML Markup for an image</h3>
+                    <pre><code class="language-html">
+&lt;div class="img-wrapper">
+    &lt;img src="path/to/minified/image.jpg" class="lazy" data-src="path/to/fullsize/image.jpg" alt="">
+    &lt;div class="loader-1">
+        &lt;span class="number">&lt;/span>
+        &lt;div class="bar">
+            &lt;div class="bar-body">
+
+            &lt;/div>
+        &lt;/div>
+    &lt;/div>
+&lt;/div>
+                    </code></pre>
+    
+                    <h3 class="mt-4">Some basic CSS</h3>
+                    <pre><code class="language-css">
+img.loaded + .loader {
+    display: none; 
+}
+    
+.lazy {
+    filter: blur(6px);
+    transition: 1s all ease; 
+}
+    
+.lazy.loaded {
+    filter: blur(0px); 
+}
+    
+.loader-1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    color: #fff;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+    
+.loader-1 .bar {
+    width: 30%;
+    height: 10px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    z-index: 1; 
+}
+    
+.loader-1 .bar .bar-body {
+    width: 20%;
+    height: 10px;
+    border-radius: 4px;
+    opacity: 1;
+    background: #fff;
+    z-index: 2; 
+}
+    
+.loader-1 .number {
+    font-size: 2.5rem;
+    margin-bottom: 7px;
+    font-weight: bold; 
+}
+    
+.hidden {
+    display: none; 
+}
+    
+                    </code></pre>
+    
+                    <h3 class="mt-4">Javascript</h3>
+                    <pre><code class="language-js">
+lazzzy.init({
+    selector: '.lazy',
+    allowLoadingOutsideViewport: false,
+    classAfterLoading: 'loaded'
+});
+
+window.MutationObserver = window.MutationObserver
+    || window.WebKitMutationObserver
+    || window.MozMutationObserver;
+
+const lazyImages = [...document.getElementsByClassName('lazy')];
+lazyImages.forEach((img) => {
+    const loader = [...img.parentElement.children].filter(ch => ch.classList.contains('loader-1'))[0];
+    observer = new MutationObserver(function (mutation) {
+        const percentage = img.getAttribute('data-loaded');
+        const numberText = [...loader.children].filter(c => c.classList.contains('number'))[0];
+        const bar = [...loader.children].filter(c => c.classList.contains('bar'))[0].children[0];
+        bar.style.width = percentage + '%';
+        numberText.innerHTML = percentage + '%';
+        if (percentage >= 99) {
+            this.disconnect();
+            setTimeout(() => {
+                loader.classList.add('hidden');
+            }, 200)
+            
+        }
+    }),
+        config = {
+            attributes: true
+        };
+    observer.observe(img, config);
+});
+                    </code></pre>
+                <h3 class="mt-4">Result</h3>
+                <div class="img-wrapper">
+                    <img src="img/small/2.jpg" class="lazy" data-src="img/2.jpg" alt="">
+                    <div class="loader-1">
+                        <span class="number"></span>
+                        <div class="bar">
+                            <div class="bar-body">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero error molestiae odio, iusto officiis ducimus ipsa perspiciatis
+                    porro, voluptas qui nisi eum praesentium soluta cumque molestias eveniet non, labore quam!
+                </p>
+                <div class="img-wrapper">
+                    <img src="img/small/3.jpg" class="lazy" data-src="img/3.jpg" alt="">
+                    <div class="loader-1">
+                        <span class="number"></span>
+                        <div class="bar">
+                            <div class="bar-body">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero error molestiae odio, iusto officiis ducimus ipsa perspiciatis
+                    porro, voluptas qui nisi eum praesentium soluta cumque molestias eveniet non, labore quam!
+                </p>
+
+
+                <div class="img-wrapper">
+                    <img src="img/small/4.jpg" class="lazy" data-src="img/4.jpg" alt="">
+                    <div class="loader-1">
+                        <span class="number"></span>
+                        <div class="bar">
+                            <div class="bar-body"> </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero error molestiae odio, iusto officiis ducimus ipsa perspiciatis
+                    porro, voluptas qui nisi eum praesentium soluta cumque molestias eveniet non, labore quam!
+                </p>
+
+
+                <div class="img-wrapper">
+                    <img src="img/small/5.jpg" class="lazy" data-src="img/5.jpg" alt="">
+                    <div class="loader-1">
+                        <span class="number"></span>
+                        <div class="bar">
+                            <div class="bar-body"> </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero error molestiae odio, iusto officiis ducimus ipsa perspiciatis
+                    porro, voluptas qui nisi eum praesentium soluta cumque molestias eveniet non, labore quam!
+                </p>
+                <div class="img-wrapper">
+                    <img src="img/small/6.jpg" class="lazy" data-src="img/6.jpg" alt="">
+                    <div class="loader-1">
+                        <span class="number"></span>
+                        <div class="bar">
+                            <div class="bar-body"> </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero error molestiae odio, iusto officiis ducimus ipsa perspiciatis
+                    porro, voluptas qui nisi eum praesentium soluta cumque molestias eveniet non, labore quam!
+                </p>
+
+
+                <div class="img-wrapper">
+                    <img src="img/small/1.jpg" class="lazy" data-src="img/1.jpg" alt="">
+                    <div class="loader-1">
+                        <span class="number"></span>
+                        <div class="bar">
+                            <div class="bar-body"> </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+    <script src="./lib/prism.js"></script>
+    <script src="./lazzzy.js"></script>
+
+    <script>
+        lazzzy.init({
+            selector: '.lazy',
+            allowLoadingOutsideViewport: false,
+            classAfterLoading: 'loaded'
+        });
+
+        window.MutationObserver = window.MutationObserver
+            || window.WebKitMutationObserver
+            || window.MozMutationObserver;
+
+        const lazyImages = [...document.getElementsByClassName('lazy')];
+        lazyImages.forEach((img) => {
+            const loader = [...img.parentElement.children].filter(ch => ch.classList.contains('loader-1'))[0];
+            observer = new MutationObserver(function (mutation) {
+                const percentage = img.getAttribute('data-loaded');
+                const numberText = [...loader.children].filter(c => c.classList.contains('number'))[0];
+                const bar = [...loader.children].filter(c => c.classList.contains('bar'))[0].children[0];
+                bar.style.width = percentage + '%';
+                numberText.innerHTML = percentage + '%';
+                if (percentage >= 99) {
+                    this.disconnect();
+                    setTimeout(() => {
+                        loader.classList.add('hidden');
+                    }, 200)
+                    
+                }
+            }),
+                config = {
+                    attributes: true
+                };
+            observer.observe(img, config);
+        });
+
+    </script>
+</body>
+
+</html>

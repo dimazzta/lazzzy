@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="lib/prism.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Mrs+Sheppards|Raleway:300,400,500,600,700" rel="stylesheet">
+
+    <title>Lazzzy.js - Demo 1</title>
+</head>
+<body>
+    <header>
+        <div class="tight-container">
+            <div class="logo">
+                <h1 class="logo-text">Lazzzy.js</h1>
+            </div>
+            <hr>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="index.html">Start</a>
+                    </li>
+                    <li class="active">
+                        <a href="demo1.html" >Demo 1</a>
+                    </li>
+                    <li>
+                        <a href="demo2.html">Demo 2</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <div class="tight-container">
+            <article>
+                <h3>HTML Markup for an image</h3>
+                <pre><code class="language-html">
+&lt;div class="img-wrapper">
+    &lt;img src="path/to/minified/image.jpg" class="lazy" data-src="path/to/fullsize/image.jpg" alt="">
+    &lt;div class="loader">&lt;/div>
+&lt;/div>
+                </code></pre>
+
+                <h3 class="mt-4">Some basic CSS</h3>
+                <pre><code class="language-css">
+img {
+    width: 100%;
+    margin: 15px 0; 
+}
+
+.img-wrapper {
+    position: relative; 
+}
+
+img.loaded + .loader {
+    display: none; 
+}
+    
+.lazy {
+    filter: blur(6px);
+    transition: 1s all ease; 
+}
+    
+.lazy.loaded {
+    filter: blur(0px); 
+}
+
+.loader {
+    width: 60px;
+    height: 60px;
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -30px 0 0 -30px;
+    border-radius: 100%;
+    animation: pulse 0.7s infinite ease-in-out; 
+}
+    
+@keyframes pulse {
+    0% {
+        transform: scale(0); 
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0; 
+    } 
+}
+
+
+                </code></pre>
+
+                <h3 class="mt-4">Javascript</h3>
+                <pre><code class="language-js">
+lazzzy.init({
+    selector: '.lazy',
+    allowLoadingOutsideViewport: false,
+    classAfterLoading: 'loaded'
+});
+                </code></pre>
+
+                <h3 class="mt-4">Result</h3>
+
+                <div class="img-wrapper">
+                    <img id="s" src="img/min/1.jpg" class="lazy" data-src="img/1.jpg" alt="">
+                    <div class="loader"></div>
+                </div>
+                
+
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero error molestiae odio, iusto officiis ducimus ipsa perspiciatis porro, voluptas qui nisi eum praesentium soluta cumque molestias eveniet non, labore quam!
+                </p>
+
+
+                <div class="img-wrapper">
+                    <img src="img/min/2.jpg" class="lazy" data-src="img/2.jpg" alt="">
+                    <div class="loader"></div>
+                </div>
+
+
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero error molestiae odio, iusto officiis ducimus ipsa perspiciatis porro, voluptas qui nisi eum praesentium soluta cumque molestias eveniet non, labore quam!
+                </p>
+
+
+                <div class="img-wrapper">
+                    <img src="img/min/3.jpg" class="lazy" data-src="img/3.jpg" alt="">
+                    <div class="loader"></div>
+                </div>
+
+
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero error molestiae odio, iusto officiis ducimus ipsa perspiciatis porro, voluptas qui nisi eum praesentium soluta cumque molestias eveniet non, labore quam!
+                </p>
+
+
+                <div class="img-wrapper">
+                    <img src="img/min/4.jpg" class="lazy" data-src="img/4.jpg" alt="">
+                    <div class="loader"></div>
+                </div>
+
+
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero error molestiae odio, iusto officiis ducimus ipsa perspiciatis porro, voluptas qui nisi eum praesentium soluta cumque molestias eveniet non, labore quam!
+                </p>
+                <div class="img-wrapper">
+                    <img src="img/min/5.jpg" class="lazy" data-src="img/5.jpg" alt="">
+                    <div class="loader"></div>
+                </div>
+
+                
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero error molestiae odio, iusto officiis ducimus ipsa perspiciatis porro, voluptas qui nisi eum praesentium soluta cumque molestias eveniet non, labore quam!
+                </p>
+
+
+                <div class="img-wrapper">
+                    <img src="img/min/6.jpg" class="lazy" data-src="img/6.jpg" alt="">
+                    <div class="loader"></div>
+                </div>
+            </article>
+        </div>
+    </main>
+    <script src="./lib/prism.js"></script>
+    <script src="./lazzzy.js"></script>
+
+    <script>
+        lazzzy.init({
+            selector: '.lazy',
+            allowLoadingOutsideViewport: false,
+            classAfterLoading: 'loaded',
+            dataLoadedForNotComputable: -1,
+            classBeforeLoading: '' 
+        });
+    </script>
+</body>
+</html>
