@@ -3,7 +3,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const config = {
     entry: ['./app/index.js'],
     output: {
-      path: __dirname + '/build',
+      path: __dirname,
       filename: 'lazzzy.js'
     },
     module: {
