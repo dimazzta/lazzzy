@@ -92,7 +92,6 @@ import './main.scss';
         _classAfterLoading = classAfterLoading
         _classBeforeLoading = classBeforeLoading
 
-        console.log(`lazzzy successfully initialized. Number of lazy images found: ${_lazyImages.length}`);
         
         if (window.addEventListener) {
             addEventListener('DOMContentLoaded', _lazyHandler, false); 
